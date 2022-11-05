@@ -1,0 +1,364 @@
+---
+title: "The propagation effect of making peace"
+subtitle: "How weapons conserve violence"
+author: "Shotaro Beppu[^Beppu]"
+institute: "Independent Study"
+date: '16th July 2022'
+output: 
+  beamer_presentation:
+    theme: "AnnArbor"
+    colortheme: "whale"
+    fonttheme: "structurebold"
+    citation_package: natbib
+    keep_tex: true
+    slide_level: 2
+    toc: true
+    number_section: true
+    includes:
+      in_header: page.tex
+bibliography: export.bib
+biblio-style: apalike
+link-citations: yes
+documentation: "handout"
+---
+
+[^Beppu]: \tiny Faculty of Engineering, The University of Tokyo (email: [shotarobeppu0811@g.ecc.u-tokyo.ac.jp](mailto:shotarobeppu0811@g.ecc.u-tokyo.ac.jp))
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+# Topic
+
+\animategraphics[loop,controls,width=\linewidth]{4}{/Users/shotaro/GitHub/weapon_network/output/images/network/animation-}{0}{48}
+
+# Summary
+
+- Investigate the flow of weapons after conflicts.
+
+- Construct a network of arms flow
+  - Explore the market mechanism of conflict
+
+- Theoretical Framework 
+  - A simple cournot model 
+  
+- Empirical Analysis
+  - IV using conflicts in other region
+  
+  - Shift-share design $\times$ Network
+  
+# Motivation
+
+## The big question
+
+**How can we make the world a better connected space?**
+
+- How are relationships formed? 
+
+- What are "good" connections?
+
+- How can technology help these connections?
+
+## Weapons
+
+**A growing industry led by the developed countries**
+
+::: columns
+
+:::: column
+```{r, fig.show="hold", out.width="70%", fig.align='center', comment= "UCDP/PRIO 21.1"}
+knitr::include_graphics("../../output/images/export_yearly.png")
+```
+::::
+
+:::: column
+```{r, fig.show="hold", out.width="100%", fig.align='left', comment= "COMTRADE"}
+knitr::include_graphics("../../output/images/network/example.png")
+```
+::::
+
+:::
+
+## Hypothesis
+
+From figures as well as in the appendix ...
+
+**What is the impact of conflicts ending in other countries?**
+
+
+# A quick literature review
+
+## Conflict
+
+Many paper concerns weapons *from or nearby* conflict zones. (\cite{RefWorks:RefID:54-pamp2018the}, \cite{RefWorks:RefID:57-bara2018legacies})
+
+$\Longrightarrow$  Probably difficult to obtain the impact of weapons due to confounders
+
+- ethnicity \cite{RefWorks:RefID:60-lane2016intrastate}
+
+- immigration \cite{RefWorks:RefID:28-salehyan2006refugees}
+
+- peace building \cite{RefWorks:RefID:62-beardsley2011peacekeeping}
+
+$\Longrightarrow$ Considers a case where we might be able to isolate these. 
+$\Longrightarrow$ Whether weapons flow after conflict is itself an interesting question.
+
+## Network
+
+Used to explain interdependencies and relationships
+
+- Arms dependence \cite{RefWorks:RefID:26-lebacher2020exploring}
+
+- Allies and enemies \cite{RefWorks:RefID:33-jackson2015networks}
+
+- Trade \cite{RefWorks:RefID:25-westveld2011mixed}
+
+A similar idea is \cite{RefWorks:RefID:11-benson2018trading}
+
+$\Longrightarrow$ Generalize the case and consider heterogeneous impacts as well as construct network measures.
+
+
+## Game theory
+
+More weapons lead to more severe casualties? 
+
+- First-mover advantage \cite{RefWorks:RefID:78-baliga2020strategy}
+
+- Dynamic game \cite{YARED20101921}
+
+- Uncertainty \cite{RefWorks:RefID:71-chassang2010conflict}
+
+$\Longrightarrow$ Further empirical research needed
+
+## Shift-share
+
+Considers changes in growth due to different exposure by sector share. (\cite{RefWorks:RefID:872-autor2013china}, \cite{10.1257/aer.20181047})
+
+$\Longrightarrow$ Consider different importers as different sectors exposed to different conflicts (shocks).
+
+# The framework
+
+## Simple case
+\framesubtitle{A simple cournot model}
+
+```{r, fig.show="hold", out.width="60%", fig.align='center', fig.cap= "Network of 2 suppliers and 3 buyers"}
+knitr::include_graphics("../../output/images/example_network.png")
+```
+
+## Comparative Stiatics
+
+**What happens if many countries stop war?**
+
+Those connected to those suppliers will gain more whilst those who were not connected also gain marginally.
+
+```{r, fig.show="hold", out.width="60%", fig.align='center', fig.cap= "The smaller the x-axis the less countries are in war"}
+knitr::include_graphics("../../output/images/n1_alpha2.png")
+```
+
+
+# Empirical Analysis
+
+## What
+
+**Two goals**
+
+1. Quantify what happens after conflict ends.
+2. Whether this change in flows affect conflict outcomes.
+
+## Main data
+
+Country-year level from 1995-2019
+
+- UCDP/PRIO ... Battledeaths, Conflict period (\cite{paper-UCDP-PRIO})
+- UN COMTRADE ... SALW (Small arms and light weapons)
+
+
+## IV using different region
+
+IV: Conflict ended in other regions. For example, the impact on Vietnam's weapon flow after war in Africa, South America ended.
+
+\begin{align}
+    import_{i,t} &= \beta_{0} + \beta_{1}end_{i,t} + \beta_{2}end_{i,t}*degree_{i,t} +  \chi_i + \xi_t + \varepsilon_{i,t} \\
+    Int_{i,t} &= \delta_{0} + \gamma_{1}import_{i,t} + \gamma_{2}type_{i,t}  + \nu_{i,t}
+\end{align}
+
+\begin{small}
+\begin{center}
+  \begin{tabular}{@{}l@{}}
+    \tabitem $import_{i,t}$ ... Total import of weapons (USD) \\
+    \tabitem $Int_{i,t}$ ... Conflict intensity measured in battledeaths \\
+    \tabitem $end_{i,t}$ ... Number of conflicts in regions (other than $r_i$) that ended \\
+    \tabitem $degree_{i,t}$ ... Network measures for centrality
+  \end{tabular}
+\end{center}
+\end{small}
+
+## Result
+
+\begin{table}
+\begin{tabular}{lcc}
+   \tabularnewline
+   Dependent Variables:                     & logimport             & log\_battledeath\\
+   Model:                                   & (1)                   & (2)\\
+   \emph{Variables} &   &  \\
+   endyear\_intensity\_0                  & 0.1530$^{*}$          &   \\
+                                            & (0.0770)              &   \\
+   degree                                   & 0.1542$^{***}$        &   \\
+                                            & (0.0287)              &   \\
+   endyear\_intensity\_0 $\times$ degree & -0.0051$^{**}$        &   \\
+                                            & (0.0021)              &   \\
+   type\_of\_conflictterritory            & 0.0450                & -0.2618\\
+                                            & (0.1940)              & (0.1901)\\
+   logimport                                &                       & 0.1496\\
+                                            &                       & (0.1240)\\
+   \emph{Fixed-effects} &   &  \\
+   year                                     & Yes                   & Yes\\
+   country                                  & Yes                   & Yes\\
+   \emph{Fit statistics} &   &  \\
+   Observations                             & 660                   & 660\\
+   R$^2$                                    & 0.78952               & 0.54464\\
+   Within R$^2$                             & 0.08672               & -0.02524\\
+   F-test (IV only)                         & 18.514                & 2.1223\\
+   Wald (IV only), p-value                  & $1.66\times 10^{-6}$ & 0.22817\\
+   \multicolumn{3}{l}{\emph{Clustered (year) standard-errors in parentheses}}\\
+   \multicolumn{3}{l}{\emph{Signif. Codes: ***: 0.01, **: 0.05, *: 0.1}}\\
+\end{tabular}
+\end{table}
+
+## Network Shift-share
+
+To more accurately capture the movement after war. 
+  
+  
+
+::: columns
+
+:::: column
+```{r, fig.show="hold", out.width="90%", fig.align='center', fig.cap= "The simple network again"}
+knitr::include_graphics("../../output/images/decompose_network.png")
+```
+::::
+
+:::: column
+
+\
+
+The weight (the amount of trade) should matter.  
+
+- "Substitution effect" is explored in shift-share design
+- The shock comes from the ties of others (e.g. $s1 \leftrightarrow b1$)
+
+::::
+
+:::
+
+## Network Influence
+
+To more accurately capture the movement after war. 
+  
+  
+
+::: columns
+
+:::: column
+```{r, fig.show="hold", out.width="90%", fig.align='center', fig.cap= "The simple network again"}
+knitr::include_graphics("../../output/images/decompose_network.png")
+```
+::::
+
+:::: column
+
+```{=latex}
+\begin{align*}
+  c_{s \rightarrow b} &= \sum_{b'} \frac{w_{s,b}}{w_{s, b'}} \text{ conflict effect} \\
+  s_{s \rightarrow b} &= \sum_{s'} \frac{w_{s,b}}{w_{s', b}} \text{ substitution effect} \\
+  e_{b \rightarrow b'} &= \sum_s c_{s \rightarrow b} * \sum_s s_{s \rightarrow b'} \text{ overall}
+\end{align*}
+```
+
+::::
+
+:::
+
+## Specification
+
+
+\begin{align}
+    import_{i,t} &= \theta_{0} + \theta_{1}z_{i, t}  +  \theta_i + \theta_t + \nu_{i,t} \\
+    Int_{i,t} &= \zeta_{0} + \zeta_{1}import_{i,t} + \zeta_{2}x_{i,t}  + \upsilon_{i,t}
+\end{align}
+
+\begin{small}
+\begin{center}
+  \begin{tabular}{@{}l@{}}
+    \tabitem $z_{i}$ ... Modified shift-share instrument  \\
+    \tabitem $z_{i, t} = \sum_j e_{j \rightarrow i} \delta_{j, t}$ \\
+    \tabitem $\delta_{j,t}$ is dummy for whether conflict ended in the time span.
+  \end{tabular}
+\end{center}
+\end{small}
+
+
+## Results
+
+The result below uses a five year window
+
+---
+
+\begin{table}
+\begin{tabular}{lcc}
+   \tabularnewline
+   Dependent Variables:    & log(total\_import) & log(bd)\\
+   Model:                  & (1)                   & (2)\\
+    \emph{Variables} &   &  \\
+   log(ss)               & -1.465$^{**}$         &   \\
+                           & (0.5879)              &   \\
+   conflict                & 0.6874$^{*}$          &   \\
+                           & (0.3845)              &   \\
+   log(total\_import+1)   &                       & 7.065$^{**}$\\
+                           &                       & (3.284)\\
+  \emph{Fixed-effects} &   &  \\
+   country                 & Yes                   & Yes\\
+   ranges                  & Yes                   & Yes\\
+   \emph{Fit statistics} &   &  \\
+   Observations            & 935                   & 935\\
+   R$^2$                   & 0.86603               & -24.584\\
+   Within R$^2$            & 0.00705               & -92.285\\
+   F-test (IV only)        & 3.2956                & 1,836.7\\
+   Wald (IV only), p-value & 0.01749               & 0.03169\\
+   \multicolumn{3}{l}{\emph{Clustered (country) standard-errors in parentheses}}\\
+   \multicolumn{3}{l}{\emph{Signif. Codes: ***: 0.01, **: 0.05, *: 0.1}}\\
+\end{tabular}
+\end{table}
+
+
+## Important Assumptions
+
+- \cite{10.1093/restud/rdab030} shows the exogeneity of the shock is enough for shift-share design. However, this shock is transmitted by the exporter which may not be exogenous.
+
+- It is possible that different goods go the same path (such as foreign aid via developed countries) and have a bigger effect than weapons. More data for robustness check is necessary.
+
+- Another important assumption is that the suppliers of weapons do not control the outcome of conflicts. If they can, they could strategically allocate weapons to maximize profits thereby violating exogeneity between the end of conflict and the country of interest.
+
+- Lastly, this assumes measurement error is relatively small. However, in reality, any data this uses (battle death, end of conflict, arms trade) is highly uncertain. To mitigate some of it, checks using the lower and upper bound of battle deaths UCDP/PRIO gives can be utilized.
+
+
+# appendix
+
+## Figures related to the # of conflicts
+
+```{r, fig.show="hold", out.width="40%", fig.align='center'}
+knitr::include_graphics("../../output/images/start_end_year.png")
+knitr::include_graphics("../../output/images/start_end_year_region.png")
+```
+
+
+## Figures related to the  intensity of conflicts
+
+```{r, fig.show="hold", out.width="40%", fig.align='center', comment= "UCDP/PRIO 21.1"}
+knitr::include_graphics(c("../../output/images/death_yearly.png",
+                        "../../output/images/intensity_yearly.png"))
+```
+
+
+# Reference

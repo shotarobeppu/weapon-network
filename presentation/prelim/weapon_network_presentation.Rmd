@@ -1,0 +1,191 @@
+---
+title: "Arms Trade and Conflict"
+author: "Shotaro Beppu"
+date: "January 12, 2022"
+output: 
+  beamer_presentation:
+    colortheme: "seahorse"
+    citation_package: natbib
+    keep_tex: yes
+    slide_level: 2
+    toc: true
+    number_section: true
+    includes:
+      in_header: page.tex
+  word_document: default
+bibliography: export.bib
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+# Overview
+
+1. The effect of weapons on conflicts
+2. IV approach
+3. Model of supply and demand
+
+# Background
+
+## Facts
+
+1. Conflicts are ending 
+
+```{r, fig.show="hold", out.width="40%", fig.align='center'}
+knitr::include_graphics("../output/images/start_end_year.png")
+knitr::include_graphics("../output/images/start_end_year_region.png")
+```
+
+## Facts 
+
+2. Less deadly?
+
+```{r, fig.show="hold", out.width="40%", fig.align='center', comment= "UCDP/PRIO 21.1"}
+knitr::include_graphics(c("../output/images/death_yearly.png",
+                        "../output/images/intensity_yearly.png"))
+```
+
+## Facts
+
+3. More weapons.[^1]
+
+```{r, fig.show="hold", out.width="70%", fig.align='center', comment= "UCDP/PRIO 21.1"}
+knitr::include_graphics("../output/images/export_yearly.png")
+```
+
+[^1]: SALW for \emph{Small Arms and Light Weapons}
+
+## Question
+
+- The effect of weapons on ongoing conflicts.
+
+  - Worsen Conflict?
+  - Deterrence?
+  
+## Hypothesis
+
+- Additional supply of weapons worsens conflicts.
+
+# Empirical test
+
+## Why IV
+
+1. Increase in weapons affects conflicts.
+2. More intense conflicts increase demands for weapons.
+3. Confounding variables such as hatred.
+
+```{r, fig.show="hold", out.width="70%", fig.align='center', comment= "UCDP/PRIO 21.1"}
+knitr::include_graphics("../presentation/images/iv_dag.png")
+```
+
+## IV
+
+Use end of conflicts in other region as an IV.
+
+## Logic
+
+1. Conflict ends in country A.
+$\rightarrow$ Demand for weapons in A goes close to 0 (Assumption). 
+2. Market of weapon reacts.
+$\rightarrow$ Price of weapon goes down.
+3. Other buyers in country B can buy more.
+4. Suppliers provide more weapons to those buyers.
+5. There will be more weapons in country B.
+
+## Exclusion Restriction 
+
+Africa's timing of end of war would not affect India's war other than changes in the weapon market.
+
+1. Migration, Services etc.
+
+2. Peace building activities? Other trade?
+
+```{r, fig.show="hold", out.width="70%", fig.align='center', comment= "UCDP/PRIO 21.1"}
+knitr::include_graphics("../presentation/images/iv_dag_er.png")
+```
+
+## Data
+
+1. [\textcolor{blue}{UCDP/PRIO}](https://ucdp.uu.se/downloads/) (Conflict)
+2. [\textcolor{blue}{US COMTRADE}](https://comtrade.un.org/data/Doc/api/ex/r) (Trade)
+
+3. Problem: Only USD. Cannot distinguish between price $\downarrow$ and quantity $\uparrow$.
+
+# Model
+
+## Fixed Network - Setup
+
+- Two suppliers (s1 & s2) and Three buyers (b1, b2 & b3)
+- Assumptions
+  - Entire network is common knowledge
+  
+  - Compete on quantity
+
+```{r, fig.show="hold", out.width="70%", fig.align='center', comment= "UCDP/PRIO 21.1"}
+knitr::include_graphics("../presentation/images/example_network.png")
+```
+
+## Fixed Network - Setup
+
+Firm's profit is 
+\begin{align}
+    \pi_s(a) &= \sum_{b \in \bm{B}} g_{s,b}P(q_b)q_{s,b} - C_s(a) \\
+    P_b(q_b) &= \alpha - \beta q_b \\
+    C_s(a) &= c q_s^2
+\end{align}
+
+where $a = (q_{s,b1}, q_{s,b2}, q_{s,b3})$, $B = \{b1, b2, b3\}$, $g_{s,b} = \{0,1\}$, $q_b = q_{s1,b} + q_{s2,b}$, and $q_s = q_{s,b1} + q_{s,b2} + q_{s,b3}$.
+
+```{r, fig.show="hold", out.width="70%", fig.align='center', }
+knitr::include_graphics("../presentation/images/example_network.png")
+```
+
+## Fixed Network - Change of environment
+
+\begin{align}
+    q_{s_1,b_2} = q_{s_2,b_2} &= \frac{\alpha}{5c+3\beta} \\
+    q_{s_1,b_2}' &= \frac{\alpha}{8c+3\beta} \\
+    q_{s_2,b_2}' &= \frac{\alpha\beta + 4\alpha c}{3\beta^2 + 8c^2 + 11\beta c}
+\end{align}
+
+```{r, fig.show="hold", out.width="40%", fig.align='center', fig.subcap= c('before', 'after')}
+knitr::include_graphics(c("../presentation/images/example_network.png",
+                          "../presentation/images/example_network_2.png"))
+```
+
+## Fixed Network - Result (potential)
+
+1. If number of buyers decreases, supplier will supply more to existing buyers
+2. The difference will be stronger for those that were linked by suppliers before.
+
+## $g_{s,b}?$
+
+For fixed network, similar to gravity model
+
+\begin{equation}
+  \frac{Arms Industry_s * Battle Intensity_b}{Distance_{s,b}*Preference_{s,b}}
+\end{equation}
+
+## Refinement
+
+1. New matching depends on which conflict ended. 
+2. Conflict environment $\rightarrow$ @RefWorks:RefID:63-franke2015conflict, @konig2017networks
+3. Incomplete information $\rightarrow$ Bargaining? Search Theory? @RefWorks:RefID:839-peters1994equilibrium
+
+## Refinement (idea)
+
+1. Buyers optimize their quantity based on its conflict and expected linkage to suppliers.
+\begin{align}
+  \pi_b &= \sum_{j \in \mathbf{B}/\{i\}} p_{ij}V - \sum_{j \in \mathbf{B}/\{i\}} p_{ji}V - C(a) \\
+  p_{ij} &= \frac{q_i}{q_i + q_j}
+\end{align}
+
+2. Suppliers have preferences based on friendship, distance etc. (this preference list will change after the end of some conflict)
+
+3. Buyers who many suppliers have high preference can demand the price to go down. (proportional to degree of buyer?)
+
+4. Trading is complete and buyers get payoff.
+
+# References
+
